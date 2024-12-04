@@ -7,6 +7,7 @@ const SingleProductPage = () => {
   const navigate = useNavigate();
   const [productData, setProductData] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const isAdmin = localStorage.getItem("isAdmin");
   const { id } = useParams();
   console.log(id);
 
@@ -48,9 +49,14 @@ const SingleProductPage = () => {
     <div>
       <Navbar />
       <div className="container mt-5">
-        <h1 style={{
-                  color: "#795757",
-                }} className="text-center mb-4 ">Product Details</h1>
+        <h1
+          style={{
+            color: "#795757",
+          }}
+          className="text-center mb-4 "
+        >
+          Product Details
+        </h1>
         <div className="row justify-content-center p-5">
           <div className="col-md-6 mb-4">
             <div className="card h-100 shadow-lg border-0">
@@ -60,47 +66,70 @@ const SingleProductPage = () => {
                 }}
                 className="card-body p-5"
               >
-                <h5 style={{
-                  color: "#FFF0D1",
-                }} className="card-title font-weight-bold">
+                <h5
+                  style={{
+                    color: "#FFF0D1",
+                  }}
+                  className="card-title font-weight-bold"
+                >
                   {productData.name}
                 </h5>
                 <hr />
-                <p style={{
-                  color: "#FFF0D1",
-                }} className="card-text">
+                <p
+                  style={{
+                    color: "#FFF0D1",
+                  }}
+                  className="card-text"
+                >
                   <strong>ID:</strong> {productData.no}
                 </p>
-                <p style={{
-                  color: "#FFF0D1",
-                }} className="card-text">
+                <p
+                  style={{
+                    color: "#FFF0D1",
+                  }}
+                  className="card-text"
+                >
                   <strong>Description:</strong> {productData.description}
                 </p>
-                <p style={{
-                  color: "#FFF0D1",
-                }} className="card-text">
+                <p
+                  style={{
+                    color: "#FFF0D1",
+                  }}
+                  className="card-text"
+                >
                   <strong>Price:</strong> ₹ {productData.price}
                 </p>
               </div>
-              <div style={{
+
+              <div
+                style={{
                   backgroundColor: "#FFF0D1",
-                }} className="card-footer text-center d-flex justify-content-around p-4">
-                <button style={{
+                }}
+                className="card-footer text-center d-flex justify-content-around p-4"
+              >
+                {isAdmin === "true" && (
+                  <button
+                    style={{
+                      backgroundColor: "#795757",
+                    }}
+                    onClick={editProduct}
+                    className="btn btn-success btn-sm w-25"
+                  >
+                    Edit
+                  </button>
+                )}
+              {isAdmin === "true" && (
+                <button
+                style={{
                   backgroundColor: "#795757",
                 }}
-                  onClick={editProduct}
-                  className="btn btn-success btn-sm w-25"
-                >
-                  Edit
-                </button>
-                <button style={{
-                  backgroundColor: "#795757",
-                }}
-                  onClick={() => setShowModal(true)}
-                  className="btn btn-danger btn-sm w-25"
-                >
-                  Delete
-                </button>
+                onClick={() => setShowModal(true)}
+                className="btn btn-danger btn-sm w-25"
+              >
+                Delete
+              </button>
+              )}
+                
               </div>
             </div>
           </div>

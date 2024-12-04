@@ -9,9 +9,10 @@ const HomePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [productData, setProductData] = useState([]);
+  const isAdmin = localStorage.getItem("isAdmin"); 
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Check if token exists
+    const token = localStorage.getItem("token"); 
     if (!token) {
       // If no token, redirect to login
       navigate("/login/You are not Authenticated");
@@ -45,7 +46,8 @@ const HomePage = () => {
         <h1 style={{ color: "#664343" }} className="text-center mb-4">
           Products List
         </h1>
-        <div className="d-flex justify-content-center mb-5">
+        {isAdmin ==='true' && (
+          <div className="d-flex justify-content-center mb-5">
           <button
             style={{ fontSize: "0.9rem", backgroundColor: "#795757" }}
             onClick={() => addProduct()}
@@ -54,6 +56,8 @@ const HomePage = () => {
             Add Product
           </button>
         </div>
+        )}
+        
         <div className="row">
           {productData.map((product) => (
             <div className="col-12 mb-4" key={product._id}>

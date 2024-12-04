@@ -34,8 +34,10 @@ const Login = () => {
       console.log(response);
       setMessage(response.data.message); // Show success message if login is successful
       console.log(response.data.token);
-      const token = response.data.token; // Get the token from the response
+      const token = response.data.token; 
+      const isAdmin = response.data.isAdmin; 
       localStorage.setItem("token", token);
+      localStorage.setItem("isAdmin", isAdmin);
       if (token) {
         // axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       }

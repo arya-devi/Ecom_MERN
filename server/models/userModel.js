@@ -10,7 +10,11 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:[true,'password must be required'],
         minlength:[6,'Password must contain atleast 6 characters']
-    }
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false,
+      }
 })
 const User = mongoose.model('User',userSchema)
 module.exports = User

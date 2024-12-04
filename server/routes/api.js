@@ -155,9 +155,39 @@ const generateSecretKey = () => {
 };
 console.log(generateSecretKey());
 
-router.post("/login", (req, res) => {
-  // console.log(req.headers);
+// router.post("/login", (req, res) => {
+//   // console.log(req.headers);
 
+//   const { email, password } = req.body;
+
+//   User.findOne({ email })
+//     .then((user) => {
+//       if (!user) {
+//         return res.status(401).json({ message: "User not Found" });
+//       }
+
+//       return bcrypt.compare(password, user.password).then((isPasswordValid) => {
+//         if (!isPasswordValid) {
+//           return res.status(401).json({ message: "Incorrect password" });
+//         }
+
+//         // Generate a JWT token
+//         const token = jwt.sign(
+//           { userId: user._id },
+//           (process.env.JWT_SECRET = generateSecretKey()),
+//           // { expiresIn: "1h" }
+//         );
+
+//         // Send the token in the response
+//       return res.status(200).json({ token ,message: "successfully login"});
+//       });
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//       return res.status(500).send("Internal Server Error");
+//     });
+// });
+router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
   User.findOne({ email })
@@ -166,20 +196,19 @@ router.post("/login", (req, res) => {
         return res.status(401).json({ message: "User not Found" });
       }
 
-      return bcrypt.compare(password, user.password).then((isPasswordValid) => {
+      bcrypt.compare(password, user.password).then((isPasswordValid) => {
         if (!isPasswordValid) {
           return res.status(401).json({ message: "Incorrect password" });
         }
 
         // Generate a JWT token
         const token = jwt.sign(
-          { userId: user._id },
-          (process.env.JWT_SECRET = generateSecretKey()),
-          // { expiresIn: "1h" }
+          { userId: user._id, isAdmin: user.isAdmin },
+          process.env.JWT_SECRET,
+          { expiresIn: "1h" }
         );
 
-        // Send the token in the response
-      return res.status(200).json({ token ,message: "successfully login"});
+        return res.status(200).json({ token, isAdmin: user.isAdmin, message: "Successfully logged in" });
       });
     })
     .catch((err) => {
