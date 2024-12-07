@@ -4,7 +4,6 @@ const userSchema = new mongoose.Schema({
    
     no:{
         type:Number,
-        required:[true,'id is required']
     },
     name:{
         type:String,
@@ -19,6 +18,10 @@ const userSchema = new mongoose.Schema({
     description:{
         type:String,
         required:[true,'description is required'],
+    },
+    image:{
+        type:String,
+        required:[true,'image is required'],
     }
 })
 userSchema.plugin(mongoosePaginate);

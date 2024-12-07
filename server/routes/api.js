@@ -5,16 +5,18 @@ const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const verifyToken= require('./loginMiddleware')
+const verifyToken= require('./loginMiddleware');
+const { error } = require("console");
 
 //create product
 router.post("/create_product",verifyToken, (req, res) => {
-  const { name, description, price, no } = req.body;
+  const { name, description, price, image } = req.body;
   const product = new Product({
-    no,
+    
     name,
     description,
     price,
+    image
   });
   const validationError = product.validateSync();
 
@@ -61,16 +63,18 @@ router.get("/viewProduct/:id",verifyToken, (req, res) => {
 //update product
 router.put("/update_product/:id",verifyToken, (req, res) => {
   const productId = req.params.id;
-  const { name, description, price, no } = req.body;
+  const { name, description, price, image } = req.body;
   // Validate the updated product data
-  const updatedProduct = new Product({ no, name, description, price });
+  const updatedProduct = new Product({  name, description, price,image });
   const validationError = updatedProduct.validateSync();
   if (validationError) {
     // If there are validation errors, send a JSON response with the errors
     res.status(400).json({ error: validationError.errors });
+    console.log(error);
+    
   } else {
     // Update the product in the database
-    Product.findByIdAndUpdate(productId, { no, name, description, price })
+    Product.findByIdAndUpdate(productId, {  name, description, price,image })
       .then(() => {
         // Send a JSON response indicating success
         res.status(200).json({ message: "Product updated successfully" });

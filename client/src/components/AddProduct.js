@@ -12,6 +12,7 @@ const AddProduct = () => {
     name: "",
     price: "",
     description: "",
+    image: "",
   });
   useEffect(() => {
     const token = localStorage.getItem("token"); // Check if token exists
@@ -34,6 +35,7 @@ const AddProduct = () => {
             name: fetchedProduct.name,
             price: fetchedProduct.price,
             description: fetchedProduct.description,
+            image: fetchedProduct.image,
           });
         })
         .catch((error) => {
@@ -67,6 +69,7 @@ const AddProduct = () => {
           name: "",
           price: "",
           description: "",
+          image: "",
         });
         setTimeout(() => {
           navigate("/home");
@@ -79,6 +82,7 @@ const AddProduct = () => {
           name: "",
           price: "",
           description: "",
+          image: "",
         });
         setTimeout(() => {
           navigate("/home");
@@ -96,19 +100,6 @@ const AddProduct = () => {
           {id ? "Edit Product" : "Add Product"}
         </h2>
         <form onSubmit={handleSubmit}>
-          {/* ID Field */}
-          <div className="form-group">
-            <label htmlFor="productId">Product ID</label>
-            <input
-              type="text"
-              className="form-control"
-              name="no"
-              value={product.no}
-              onChange={handleChange}
-              placeholder="Enter Product ID"
-            />
-          </div>
-
           {/* Name Field */}
           <div className="form-group">
             <label htmlFor="productName">Product Name</label>
@@ -146,6 +137,19 @@ const AddProduct = () => {
               rows="4"
               placeholder="Enter Product Description"
             ></textarea>
+          </div>
+
+          {/* Image Field */}
+          <div className="form-group">
+            <label htmlFor="productImage">Image</label>
+            <input
+              type="text"
+              className="form-control"
+              name="image"
+              value={product.image}
+              onChange={handleChange}
+              placeholder="Add image"
+            />
           </div>
 
           {/* Submit Button */}
